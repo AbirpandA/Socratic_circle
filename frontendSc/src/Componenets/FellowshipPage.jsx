@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Sidebar from './Sidebar';
 import { ScrollText, Search, Users, User, PenTool, Menu, Mail, BookOpen, Clock, Award } from 'lucide-react';
 
 const FellowshipPage = () => {
@@ -37,13 +38,8 @@ const FellowshipPage = () => {
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      {/* Sidebar (keeping the same as before) */}
-      <div className="fixed w-72 h-screen bg-stone-100 border-r border-stone-200 p-8 flex flex-col space-y-8">
-        {/* ... Same sidebar content as before ... */}
-      </div>
-
-      {/* Main Content */}
-      <div className="ml-72 flex-1 p-8">
+      <Sidebar />
+      <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-12">

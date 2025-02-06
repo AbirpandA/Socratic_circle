@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import Sidebar from './Sidebar';
 import { Scroll, Send, BookOpen, Search, ThumbsUp, MessageCircle, Share2, Filter } from 'lucide-react';
 
-const MessageInterface = () => {
+const InquirePage = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -43,27 +44,8 @@ const MessageInterface = () => {
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      {/* Left Sidebar - Topics */}
-      <div className="w-72 border-r border-stone-200 p-6 bg-stone-100">
-        <h2 className="text-xl font-serif mb-6 text-stone-800">Fields of Inquiry</h2>
-        
-        <div className="space-y-4">
-          {["Philosophy", "Arts", "Sciences", "Letters", "Mathematics", "Music"].map(topic => (
-            <button key={topic} className="w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-stone-200 transition-all font-serif">
-              {topic}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-8 p-4 bg-stone-200 rounded-lg">
-          <p className="font-serif text-stone-600 italic text-sm">
-            "The unexamined life is not worth living" - Socrates
-          </p>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <Sidebar />
+      <div className="flex-1 p-8">
         {/* Header */}
         <div className="border-b border-stone-200 p-6">
           <div className="max-w-3xl mx-auto">
@@ -187,4 +169,4 @@ const MessageInterface = () => {
   );
 };
 
-export default MessageInterface;
+export default InquirePage;

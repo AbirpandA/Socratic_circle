@@ -86,7 +86,7 @@ const SessionPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="ml-72 flex-1 p-8">
+      <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-8">
