@@ -4,6 +4,8 @@ import FellowshipPage from "./Componenets/FellowshipPage"
 import MentorSearch from "./Componenets/MentorSearch"
 import InquirePage from "./Componenets/InquirePage"
 import SessionPage from "./Componenets/SessionPage"
+import MessageSection from "./Componenets/MessageSection"
+
 import Sidebar from "./Componenets/Sidebar"
 
 const App = () => {
@@ -18,6 +20,7 @@ const App = () => {
             <Route path="/fellowship" element={<FellowshipPage />} />
             <Route path="/Inquire" element={<InquirePage />} />
             <Route path="/session" element={<SessionPage />} />
+            <Route path="/message" element={<MessageSection />} />
           </Routes>
         </div>
       </div>
