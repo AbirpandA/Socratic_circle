@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
-import { ScrollText, Search, Users, User, PenTool } from 'lucide-react';
+import { ScrollText, Search, Users,MessageCircleQuestion, PenTool,CalendarSync  } from 'lucide-react';
 
 const Sidebar = () => {
   return (
@@ -28,9 +28,14 @@ const Sidebar = () => {
           <span className="font-serif text-lg">Fellowship</span>
         </Link>
         
-        <Link to="/profile" className="flex items-center space-x-4 text-stone-600 hover:text-stone-900 p-3 rounded-lg hover:bg-stone-200 transition-all">
-          <User size={20} />
-          <span className="font-serif text-lg">Profile</span>
+        <Link to="/Inquire" className="flex items-center space-x-4 text-stone-600 hover:text-stone-900 p-3 rounded-lg hover:bg-stone-200 transition-all">
+          < MessageCircleQuestion size={20} />
+          <span className="font-serif text-lg">Inquire</span>
+        </Link>
+
+        <Link to="/Session" className="flex items-center space-x-4 text-stone-600 hover:text-stone-900 p-3 rounded-lg hover:bg-stone-200 transition-all">
+          < CalendarSync  size={20} />
+          <span className="font-serif text-lg">Session</span>
         </Link>
       </nav>
 

@@ -38,7 +38,6 @@ const FellowshipPage = () => {
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      <Sidebar />
       <div className="flex-1 p-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}

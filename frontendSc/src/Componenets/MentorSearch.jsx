@@ -49,10 +49,8 @@ const MentorSearch = () => {
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      {/* Sidebar (keeping consistent with previous design) */}
-      <div className="fixed w-72 h-screen bg-stone-100 border-r border-stone-200 p-8 flex flex-col space-y-8">
-        {/* ... Same sidebar content as before ... */}
-      </div>
+      
+     
 
       {/* Main Content */}
       <div className="flex-1 p-8">
