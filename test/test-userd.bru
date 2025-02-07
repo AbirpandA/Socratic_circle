@@ -1,0 +1,21 @@
+meta {
+  name: test-userd
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/users/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "abir",
+    "email": "abir@mail.com",
+    "password": "abir123",
+    "teach": "react-sometimes",
+    "learn": "nothing"
+  }
+}

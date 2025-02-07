@@ -1,14 +1,34 @@
 import React, { useState } from 'react';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import axios from "axios"
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //  login logic here
+    setError('');
+
+    try {
+      const response = await axios.post("http://localhost:3000/api/users/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem('token', response.data.token);
+      navigate('/');
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data);
+      } else {
+        setError('An error occurred. Please try again.');
+      }
+    }
   };
 
   return (
@@ -16,9 +36,12 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-stone-50">
       {/* Main Container */}
       <div className="w-full max-w-md p-8 space-y-8">
+        {/* Error Message */}
+        {error && <div className="text-red-500 text-center">{error}</div>}
+
         {/* Header Section */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-serif text-stone-800">The Gilded Gallery</h1>
+          <h1 className="text-4xl font-serif text-stone-800">Socratic Circle</h1>
           <p className="text-stone-600 italic font-serif">
             "Beauty in simplicity, wisdom in restraint"
           </p>
@@ -83,15 +106,12 @@ const LoginPage = () => {
 
         {/* Footer Links */}
         <div className="text-center space-y-4">
+          <Link to="/signup" className="block text-stone-600 hover:text-red-400 text-sm">
+            Don't have an account? Sign up
+          </Link>
           <a href="#" className="block text-stone-600 hover:text-red-400 text-sm">
             Forgot your password?
           </a>
-          <div className="text-stone-400 text-sm">
-            New to The Gilded Gallery?{' '}
-            <a href="#" className="text-stone-600 hover:text-stone-800">
-              Create an account
-            </a>
-          </div>
         </div>
 
         {/* Stoic Quote */}

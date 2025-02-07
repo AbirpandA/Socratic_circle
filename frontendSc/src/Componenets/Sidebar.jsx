@@ -6,9 +6,9 @@ const Sidebar = () => {
   return (
     <div className="fixed w-72 h-screen bg-stone-100 border-r border-stone-200 p-8 flex flex-col space-y-8">
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 bg-stone-800 rounded-full flex items-center justify-center">
+        <Link  to="/Profile" className="w-8 h-8 bg-stone-800 rounded-full flex items-center justify-center">
           <span className="text-stone-50 font-serif text-lg">C</span>
-        </div>
+        </Link>
         <h1 className="text-2xl font-serif text-stone-800 tracking-wide">Socratic</h1>
 
         <div className='flex gap-2 align-middle'>

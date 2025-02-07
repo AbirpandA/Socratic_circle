@@ -27,3 +27,5 @@ const feedSchema= new mongoose.Schema({
     }
     
 })
+
+module.exports= mongoose.model('Feed', feedSchema)
