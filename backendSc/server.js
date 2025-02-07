@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoute = require('./Routes/userRoutes');
+const inquireRoute = require('./Routes/inquireRoutes');
+const feedRoute = require('./Routes/feedRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +24,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', userRoute);
+app.use('/api/inquire', inquireRoute);
+app.use('/api/posts', feedRoute);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

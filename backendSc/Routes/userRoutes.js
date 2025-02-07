@@ -33,6 +33,16 @@ userRoute.post('/register',async(req,res)=>{
     }
 })
 
+userRoute.get('/getusers', async (req, res) => {
+    try {
+        const users = await userModel.find(); // Fetch selected fields
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ error: 'Error fetching users.' });
+    }
+});
+
+
 userRoute.post('/login', async (req, res) => {
     const { error } = loginSchema.validate(req.body);
     if (error) {

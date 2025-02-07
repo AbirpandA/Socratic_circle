@@ -9,11 +9,11 @@ const feedSchema= new mongoose.Schema({
         required:true,
     },
     videoUrl: {
-        type: string,
+        type: String,
         default: '',
     },
     image: {
-        type: [],
+        type: [String],
         default: null,
     },
     likes:{
@@ -21,7 +21,7 @@ const feedSchema= new mongoose.Schema({
         default:0,
     },
     comments:{
-        type:Array,
+        type:[String],
         default:[],
 
     }
