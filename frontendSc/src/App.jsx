@@ -10,6 +10,7 @@ import Sidebar from "./Componenets/Sidebar"
 import ProfilePage from './Componenets/ProfilePage';
 import LoginPage from './Componenets/LoginPage';
 import SignUpPage from './Componenets/SignUpPage';
+import ChatbotComponent from './Componenets/ChatbotComponent';
 
 const App = () => {
   const isAuthenticated = !!localStorage.getItem('token'); // Check if user is authenticated
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/signup" element={<SignUpPage />} />
           </Routes>
         </div>
+        <ChatbotComponent />
       </div>
     </Router>
   )
