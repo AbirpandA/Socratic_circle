@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { ScrollText, Search, Users, User, PenTool, Menu, Star, Clock, MapPin, Filter, SlidersHorizontal, BookOpen } from 'lucide-react';
+import { 
+  Search, 
+  Clock, 
+  MapPin, 
+  SlidersHorizontal, 
+  BookOpen, 
+  Star 
+} from 'lucide-react';
 
 const MentorSearch = () => {
   const [mentors, setMentors] = useState([
@@ -11,7 +18,7 @@ const MentorSearch = () => {
       rating: 4.9,
       reviews: 128,
       expertise: ["Sculpture", "Fresco", "Architecture"],
-      hourlyRate: "50",
+      hourlyRate: "3",
       location: "Florence, Italy",
       availability: "Next Week",
       description: "Specializing in marble sculpture and fresco techniques. Teaching the principles of human form and classical composition.",
@@ -25,7 +32,7 @@ const MentorSearch = () => {
       rating: 4.8,
       reviews: 245,
       expertise: ["Logic", "Ethics", "Natural Science"],
-      hourlyRate: "45",
+      hourlyRate: "2",
       location: "Athens, Greece",
       availability: "Tomorrow",
       description: "Teaching systematic thinking, logic, and the art of reasoning. Expertise in practical philosophy and scientific method.",
@@ -39,7 +46,7 @@ const MentorSearch = () => {
       rating: 4.7,
       reviews: 89,
       expertise: ["Musical Composition", "Herbalism", "Medicine"],
-      hourlyRate: "40",
+      hourlyRate: "1",
       location: "Rhineland",
       availability: "This Week",
       description: "Specializing in medieval musical composition and natural healing practices. Combining art with practical knowledge.",
@@ -49,9 +56,6 @@ const MentorSearch = () => {
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      
-     
-
       {/* Main Content */}
       <div className="flex-1 p-8">
         <div className="max-w-6xl mx-auto">
@@ -63,8 +67,8 @@ const MentorSearch = () => {
             </p>
           </div>
 
-          {/* Search Bar */}
-          <div className="bg-white p-6 rounded-lg border border-stone-200 mb-8 shadow-sm">
+          {/* Search Bar and Filters (Sticky) */}
+          <div className="sticky top-0 z-10 bg-white p-6 rounded-lg border border-stone-200 mb-8 shadow-sm">
             <div className="flex items-center space-x-4">
               <div className="flex-1 relative">
                 <input
@@ -87,9 +91,12 @@ const MentorSearch = () => {
                   { label: "Expertise Level", icon: BookOpen },
                   { label: "Availability", icon: Clock },
                   { label: "Language", icon: MapPin },
-                  { label: "Price Range", icon: SlidersHorizontal }
+                  { label: "SP Cost", icon: SlidersHorizontal }
                 ].map((filter, index) => (
-                  <button key={index} className="flex items-center space-x-2 px-4 py-2 border border-stone-200 rounded-lg text-stone-600 hover:border-stone-400 transition-colors">
+                  <button 
+                    key={index} 
+                    className="flex items-center space-x-2 px-4 py-2 border border-stone-200 rounded-lg text-stone-600 hover:border-stone-400 transition-colors"
+                  >
                     <filter.icon size={16} />
                     <span className="font-serif">{filter.label}</span>
                   </button>
@@ -101,13 +108,19 @@ const MentorSearch = () => {
             </div>
           </div>
 
-          {/* Results */}
-          <div className="space-y-6">
+          {/* Results (with extra top padding so content isn’t hidden behind the sticky header) */}
+          <div className="space-y-6 pt-40">
             {mentors.map(mentor => (
-              <div key={mentor.id} className="bg-white p-6 rounded-lg border border-stone-200 hover:shadow-md transition-all">
+              <div 
+                key={mentor.id} 
+                className="bg-white p-6 rounded-lg border border-stone-200 hover:shadow-md transition-all"
+              >
                 <div className="flex items-start space-x-6">
-                  <img src={mentor.avatar} alt={mentor.name} className="w-20 h-20 rounded-lg object-cover" />
-                  
+                  <img 
+                    src={mentor.avatar} 
+                    alt={mentor.name} 
+                    className="w-20 h-20 rounded-lg object-cover" 
+                  />
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-2">
                       <div>
@@ -125,7 +138,10 @@ const MentorSearch = () => {
 
                     <div className="flex flex-wrap gap-2 mb-4">
                       {mentor.expertise.map(skill => (
-                        <span key={skill} className="px-3 py-1 bg-stone-100 text-stone-600 rounded-full text-sm font-serif">
+                        <span 
+                          key={skill} 
+                          className="px-3 py-1 bg-stone-100 text-stone-600 rounded-full text-sm font-serif"
+                        >
                           {skill}
                         </span>
                       ))}
@@ -142,7 +158,7 @@ const MentorSearch = () => {
                           <span>Available {mentor.availability}</span>
                         </div>
                         <div>
-                          <span className="font-semibold">${mentor.hourlyRate}</span> /hour
+                          <span className="font-semibold">SP {mentor.hourlyRate}</span>
                         </div>
                       </div>
                       

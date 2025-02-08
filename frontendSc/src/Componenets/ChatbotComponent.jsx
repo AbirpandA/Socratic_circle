@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { ChatbotContext } from "./ChatbotProvider";
 
 const ChatbotComponent = () => {
@@ -27,14 +27,19 @@ const ChatbotComponent = () => {
             <button 
                 onClick={() => setIsOpen(!isOpen)} 
                 style={{
-                    background: "#007bff",
+                    background: "#4a5568", // Slate color
                     color: "#fff",
-                    padding: "10px 15px",
+                    width: "50px",
+                    height: "50px",
                     border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer"
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "24px", // Adjust font size for the "S"
                 }}>
-                {isOpen ? "Close Chat" : "Chat with us"}
+                {isOpen ? "✖" : "S"} {/* "S" for the chatbot, "✖" to close */}
             </button>
 
             {/* Chatbot UI */}

@@ -48,40 +48,24 @@ const FellowshipPage = () => {
             </p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-4 gap-6 mb-12">
-            {[
-              { label: "Total Fellows", value: "24", icon: Users },
-              { label: "Active Mentors", value: "8", icon: Award },
-              { label: "Learning Hours", value: "156", icon: Clock },
-              { label: "Shared Studies", value: "12", icon: BookOpen }
-            ].map((stat, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg border border-stone-200">
-                <div className="flex items-center space-x-3 mb-2">
-                  <stat.icon size={20} className="text-stone-600" />
-                  <span className="text-2xl font-serif text-stone-800">{stat.value}</span>
-                </div>
-                <p className="text-stone-600 font-serif">{stat.label}</p>
+          {/* Sticky Search and Filter */}
+          <div className="sticky top-0 bg-stone-50 py-4 z-10 border-b border-stone-200 mb-8">
+            <div className="flex items-center justify-between">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search fellows..."
+                  className="pl-10 pr-4 py-2 border border-stone-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-stone-500"
+                />
+                <Search size={18} className="absolute left-3 top-3 text-stone-400" />
               </div>
-            ))}
-          </div>
-
-          {/* Search and Filter */}
-          <div className="flex items-center justify-between mb-8">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search fellows..."
-                className="pl-10 pr-4 py-2 border border-stone-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-stone-500"
-              />
-              <Search size={18} className="absolute left-3 top-3 text-stone-400" />
-            </div>
-            <div className="flex space-x-4">
-              {["All", "Mentors", "Peers", "Recent"].map(filter => (
-                <button key={filter} className="px-4 py-2 rounded-full border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-stone-50 hover:border-stone-800 transition-all font-serif">
-                  {filter}
-                </button>
-              ))}
+              <div className="flex space-x-4">
+                {["All", "Mentors", "Peers", "Recent"].map(filter => (
+                  <button key={filter} className="px-4 py-2 rounded-full border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-stone-50 hover:border-stone-800 transition-all font-serif">
+                    {filter}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 

@@ -9,6 +9,10 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem('token'); // Check if user is authenticated
+
+  // Add this condition to return null if authenticated
+  if (isAuthenticated) return null; // Do not render the login page if authenticated
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,9 +24,19 @@ const LoginPage = () => {
         password,
       });
 
-      localStorage.setItem('token', response.data.token);
-      navigate('/');
+      // Log the response for debugging
+      console.log('Login Response:', response);
+
+      // Check if the user exists
+      if (response.status === 200) {
+        // User exists, set isAuthenticated to true
+        localStorage.setItem('token', 'your_token_here'); // Store the token if you have one
+        navigate('/find-mentors'); // Redirect to the find-mentors page
+      } else {
+        setError('Login failed. Please check your credentials.');
+      }
     } catch (err) {
+      console.error('Login Error:', err); // Log the error for debugging
       if (err.response) {
         setError(err.response.data);
       } else {

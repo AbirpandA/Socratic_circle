@@ -21,8 +21,12 @@ const SignUpPage = () => {
         password,
       });
 
-      console.log(response.data);
-      navigate('/login'); // Redirect to login page after successful sign-up
+      // Check if the response indicates success
+      if (response.status === 201) {
+        navigate('/login'); // Redirect to login page after successful sign-up
+      } else {
+        setError('Registration failed. Please try again.');
+      }
     } catch (err) {
       if (err.response) {
         setError(err.response.data);
