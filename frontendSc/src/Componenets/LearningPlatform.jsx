@@ -1,47 +1,54 @@
-import React, { useState } from 'react';
-import { ScrollText, Search, Users, User, PenTool, Menu, Heart, MessageCircle, Share2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Heart, MessageCircle, Share2 } from 'lucide-react';
 
 const LearningPlatform = () => {
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      author: "Marcus Aurelius",
-      avatar: "/api/placeholder/40/40",
-      title: "On the Art of Sculpting",
-      content: "What is the proper technique for capturing human form in marble? I've studied the ancient masters, but I seek contemporary guidance on tool selection and initial blocking techniques.",
-      likes: 42,
-      responses: 7,
-      category: "Sculpture",
-      timeAgo: "2 hours ago"
-    },
-    {
-      id: 2,
-      author: "Leonardo",
-      avatar: "/api/placeholder/40/40",
-      title: "Understanding Light and Shadow",
-      content: "Seeking guidance on chiaroscuro techniques in oil painting. Particularly interested in how to achieve the subtle gradations seen in Venetian works.",
-      likes: 89,
-      responses: 12,
-      category: "Painting",
-      timeAgo: "4 hours ago"
-    }
-  ]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/posts/feed");
+        const data = await response.json();
+
+        // Transform API response into expected format
+        const formattedPosts = data.map(post => ({
+          id: post._id,
+          author: post.user.email.split("@")[0], // Extract username from email
+          avatar: "https://api.dicebear.com/7.x/identicon/svg?seed=" + post.user.email, // Placeholder avatar
+          title: "New Post", // Placeholder title (since API does not provide one)
+          content: post.text,
+          likes: post.likes,
+          responses: post.comments.length,
+          category: "General", // Placeholder category
+          timeAgo: "Just now", // You can format actual timestamps if available
+          image: post.image[0] || null, // Use image if available
+          videoUrl: post.videoUrl || null
+        }));
+
+        setPosts(formattedPosts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-stone-50">
-      
-      {/* Main Content */}
       <div className="flex-1 p-8">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="mb-12 text-center">
             <h1 className="text-5xl font-serif text-stone-800 mb-4">Forum of Knowledge</h1>
-            <p className="text-stone-600 font-serif italic text-lg">"The beginning of wisdom is the definition of terms" - Socrates</p>
+            <p className="text-stone-600 font-serif italic text-lg">
+              "The beginning of wisdom is the definition of terms" - Socrates
+            </p>
           </div>
 
           {/* Categories */}
           <div className="flex space-x-4 mb-8 overflow-x-auto pb-2">
-            {["All", "Philosophy", "Art", "Literature", "Science", "Music"].map(category => (
+            {["All", "General", "Art", "Literature", "Science", "Music"].map(category => (
               <button key={category} className="px-4 py-2 rounded-full border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-stone-50 hover:border-stone-800 transition-all font-serif">
                 {category}
               </button>
@@ -67,7 +74,18 @@ const LearningPlatform = () => {
                 
                 <h2 className="text-2xl font-serif text-stone-800 mb-3">{post.title}</h2>
                 <p className="text-stone-600 leading-relaxed mb-6">{post.content}</p>
-                
+
+                {/* Render image or video if available */}
+                {post.image && (
+                  <img src={post.image} alt="Post Visual" className="w-full h-auto rounded-lg mb-4" />
+                )}
+                {post.videoUrl && (
+                  <video controls className="w-full h-auto rounded-lg mb-4">
+                    <source src={post.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+
                 <div className="flex items-center justify-between pt-6 border-t border-stone-100">
                   <div className="flex space-x-6">
                     <button className="flex items-center space-x-2 text-stone-600 hover:text-stone-800">
@@ -89,6 +107,7 @@ const LearningPlatform = () => {
               </div>
             ))}
           </div>
+
         </div>
       </div>
     </div>
