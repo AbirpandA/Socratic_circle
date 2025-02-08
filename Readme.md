@@ -71,3 +71,7 @@ The Socratic Mentor chatbot is an AI-powered learning assistant that promotes cr
 
 ### Skill Points
 - *GET /users/:id* → Fetch user's Skill Point balance.
+
+
+
+video-link : https://drive.google.com/file/d/1zkJeVZX7R3ByWP56w0LNgpRYqg77gX-Q/view?usp=sharing
