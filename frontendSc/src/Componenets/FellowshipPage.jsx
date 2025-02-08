@@ -1,6 +1,62 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import { ScrollText, Search, Users, User, PenTool, Menu, Mail, BookOpen, Clock, Award } from 'lucide-react';
+import { Search, Mail, Clock } from 'lucide-react';
+
+// Message Modal Component
+const MessageModal = ({ isOpen, onClose, recipient }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-[90vw]">
+        <h2 className="text-xl font-serif mb-4">Send a message to {recipient?.name}</h2>
+        <textarea
+          className="w-full p-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 transition-shadow"
+          placeholder="Type your message..."
+          rows={4}
+        ></textarea>
+        <div className="flex justify-end mt-4 space-x-2">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors"
+          >
+            Cancel
+          </button>
+          <button className="px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-900 transition-colors">
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Schedule Modal Component
+const ScheduleModal = ({ isOpen, onClose, recipient }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96 max-w-[90vw]">
+        <h2 className="text-xl font-serif mb-4">Schedule a meeting with {recipient?.name}</h2>
+        <input
+          type="datetime-local"
+          className="w-full p-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 transition-shadow"
+        />
+        <div className="flex justify-end mt-4 space-x-2">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors"
+          >
+            Cancel
+          </button>
+          <button className="px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-900 transition-colors">
+            Schedule
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const FellowshipPage = () => {
   const [connections, setConnections] = useState([
@@ -36,6 +92,31 @@ const FellowshipPage = () => {
     }
   ]);
 
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [selectedRecipient, setSelectedRecipient] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const openMessageModal = (connection) => {
+    setSelectedRecipient(connection);
+    setIsMessageModalOpen(true);
+  };
+
+  const closeMessageModal = () => {
+    setIsMessageModalOpen(false);
+    setSelectedRecipient(null);
+  };
+
+  const openScheduleModal = (connection) => {
+    setSelectedRecipient(connection);
+    setIsScheduleModalOpen(true);
+  };
+
+  const closeScheduleModal = () => {
+    setIsScheduleModalOpen(false);
+    setSelectedRecipient(null);
+  };
+
   return (
     <div className="flex min-h-screen bg-stone-50">
       <div className="flex-1 p-8">
@@ -56,6 +137,8 @@ const FellowshipPage = () => {
                   type="text"
                   placeholder="Search fellows..."
                   className="pl-10 pr-4 py-2 border border-stone-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-stone-500"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <Search size={18} className="absolute left-3 top-3 text-stone-400" />
               </div>
@@ -71,7 +154,7 @@ const FellowshipPage = () => {
 
           {/* Connections Grid */}
           <div className="grid grid-cols-2 gap-6">
-            {connections.map(connection => (
+            {connections.filter(connection => connection.name.toLowerCase().includes(searchTerm.toLowerCase())).map(connection => (
               <div key={connection.id} className="bg-white p-6 rounded-lg border border-stone-200 hover:shadow-md transition-all">
                 <div className="flex items-start space-x-4">
                   <div className="relative">
@@ -86,8 +169,11 @@ const FellowshipPage = () => {
                         <p className="text-stone-600 text-sm mb-2">{connection.title}</p>
                       </div>
                       <div className="flex space-x-2">
-                        <button className="p-2 text-stone-600 hover:text-stone-800 rounded-full hover:bg-stone-100">
+                        <button onClick={() => openMessageModal(connection)} className="p-2 text-stone-600 hover:text-stone-800 rounded-full hover:bg-stone-100">
                           <Mail size={18} />
+                        </button>
+                        <button onClick={() => openScheduleModal(connection)} className="p-2 text-stone-600 hover:text-stone-800 rounded-full hover:bg-stone-100">
+                          <Clock size={18} />
                         </button>
                       </div>
                     </div>
@@ -109,18 +195,11 @@ const FellowshipPage = () => {
               </div>
             ))}
           </div>
-
-          {/* Suggestions Section */}
-          <div className="mt-12">
-            <h2 className="text-2xl font-serif text-stone-800 mb-6">Recommended Fellows</h2>
-            <div className="bg-stone-100 p-6 rounded-lg">
-              <p className="text-stone-600 font-serif text-center">
-                "Expand your circle of wisdom. We'll suggest new fellows based on your interests and current connections."
-              </p>
-            </div>
-          </div>
         </div>
       </div>
+
+      <MessageModal isOpen={isMessageModalOpen} onClose={closeMessageModal} recipient={selectedRecipient} />
+      <ScheduleModal isOpen={isScheduleModalOpen} onClose={closeScheduleModal} recipient={selectedRecipient} />
     </div>
   );
 };
