@@ -1,7 +1,30 @@
 
+import axios from 'axios';
 import { Calendar, Users, BookOpen, MessageSquare, Clock, HelpCircle, Bookmark } from 'lucide-react';
 
 const ProfilePage = () => {
+  const [userData, setUserData] = useState(null);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/users/me', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [token]);
+
+  if (!userData) return <div>Loading...</div>;
+
   const teachingSkills = ["Poetry", "Creative Writing", "Shakespeare", "Greek Mythology"];
   const learningSkills = ["Modern Literature", "Script Writing", "Literary Analysis"];
   
@@ -30,7 +53,7 @@ const ProfilePage = () => {
           </div>
           
           <div className="relative">
-            <h1 className="text-4xl font-serif text-gray-800">Alexander Wordsworth</h1>
+            <h1 className="text-4xl font-serif text-gray-800">{userData.username}'s Profile</h1>
             <p className="text-gray-600 italic mt-2 font-serif">"In nature's infinite book of secrecy, a little I can read."</p>
           </div>
 

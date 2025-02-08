@@ -17,19 +17,18 @@ const App = () => {
   return (
     <Router>
       <div className="flex min-h-screen bg-stone-50">
-        <Sidebar />
-        <div className="flex-1 ml-72 p-8">
+        {isAuthenticated && <Sidebar />}
+        <div className={`flex-1 ${isAuthenticated ? 'ml-72' : ''} p-8`}>
           <Routes>
             <Route path="/" element={isAuthenticated ? <LearningPlatform /> : <Navigate to="/login" />} />
-            <Route path="/find-mentors" element={<MentorSearch />} />
-            <Route path="/fellowship" element={<FellowshipPage />} />
-            <Route path="/inquire" element={<InquirePage />} />
-            <Route path="/session" element={<SessionPage />} />
-            <Route path="/message" element={<MessageSection />} />
-            <Route path='/profile' element={<ProfilePage />} />
+            <Route path="/find-mentors" element={isAuthenticated ? <MentorSearch /> : <Navigate to="/login" />} />
+            <Route path="/fellowship" element={isAuthenticated ? <FellowshipPage /> : <Navigate to="/login" />} />
+            <Route path="/inquire" element={isAuthenticated ? <InquirePage /> : <Navigate to="/login" />} />
+            <Route path="/session" element={isAuthenticated ? <SessionPage /> : <Navigate to="/login" />} />
+            <Route path="/message" element={isAuthenticated ? <MessageSection /> : <Navigate to="/login" />} />
+            <Route path='/profile' element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            
           </Routes>
         </div>
       </div>
