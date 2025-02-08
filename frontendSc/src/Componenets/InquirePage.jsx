@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {Send, BookOpen, Search, ThumbsUp, MessageCircle, Share2, Filter } from 'lucide-react';
+import axios from "axios"
 
 const InquirePage = () => {
   const [messages, setMessages] = useState([
@@ -41,6 +42,36 @@ const InquirePage = () => {
     }
   ]);
 
+  const [categories, setCategories] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/inquire/categories")
+        .then(response => {
+            setCategories(response.data);  // Store fetched categories
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error("Error fetching categories:", error);
+        });
+  }, []);
+
+  // Function to fetch questions when a category is clicked
+  const fetchQuestions = async (categoryId) => {
+    setLoading(true);
+    try{
+      const response = await axios.get(`http://localhost:3000/api/inquire/questions/${categoryId}`)
+      console.log(response.data);
+      setQuestions(response.data);
+      console.log("questions", questions)
+    }catch(err){
+      console.error("Error fetching questions:", err);
+    }finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-stone-50">
       {/* Left Sidebar - Topics */}
@@ -48,11 +79,21 @@ const InquirePage = () => {
         <h2 className="text-xl font-serif mb-6 text-stone-800">Fields of Inquiry</h2>
         
         <div className="space-y-4">
-          {["Philosophy", "Arts", "Sciences", "Letters", "Mathematics", "Music"].map(topic => (
+          {/* {["Philosophy", "Arts", "Sciences", "Letters", "Mathematics", "Music"].map(topic => (
             <button key={topic} className="w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-stone-200 transition-all font-serif">
               {topic}
             </button>
-          ))}
+          ))} */}
+          {
+            categories.map((category, index) => (
+              <button key={index} className="w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-stone-200 transition-all font-serif"
+               onClick={() => fetchQuestions(category._id)}
+              >
+                {/* {category._id} */}
+                {category.name}
+              </button>
+            ))
+          }
         </div>
 
         <div className="mt-8 p-4 bg-stone-200 rounded-lg">
@@ -149,12 +190,27 @@ const InquirePage = () => {
                         </button>
                       )}
                     </div>
+                    
                   </div>
+                  
                 </div>
+                
               </div>
+              
             ))}
+            
           </div>
+          
         </div>
+        {loading ? <p>Loading questions...</p> : (
+          questions.length > 0 ? (
+            <ul>
+              {questions.map(question => (
+                <li key={question._id}>{question.questionText}</li>
+              ))}
+            </ul>
+          ) : <p>No questions found for this category.</p>
+        )}
 
         {/* Question Input */}
         <div className="border-t border-stone-200 p-6 bg-white">
@@ -183,6 +239,7 @@ const InquirePage = () => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
