@@ -11,6 +11,7 @@ import ProfilePage from './Componenets/ProfilePage';
 import LoginPage from './Componenets/LoginPage';
 import SignUpPage from './Componenets/SignUpPage';
 import ChatbotComponent from './Componenets/ChatbotComponent';
+import FeedPostForm from './Componenets/FeedPostForm';
 
 const App = () => {
   const isAuthenticated = !!localStorage.getItem('token'); // Check if user is authenticated
@@ -30,6 +31,8 @@ const App = () => {
             <Route path='/profile' element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/create-feed" element={isAuthenticated ? <FeedPostForm /> : <Navigate to="/login" />} />
+
           </Routes>
         </div>
         <ChatbotComponent />

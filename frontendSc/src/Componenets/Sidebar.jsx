@@ -1,8 +1,9 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ScrollText, Search, Users,MessageCircleQuestion, PenTool,CalendarSync,MessageSquareDot,Sparkles   } from 'lucide-react';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   return (
     <div className="fixed w-72 h-screen bg-stone-100 border-r border-stone-200 p-8 flex flex-col space-y-8">
       <div className="flex items-center space-x-3">
@@ -48,10 +49,13 @@ const Sidebar = () => {
         </Link>
       </nav>
 
-      <button className="w-full bg-stone-800 text-stone-50 py-4 px-6 rounded-lg font-serif hover:bg-stone-900 transition-all flex items-center justify-center space-x-2">
-        <PenTool size={20} />
-        <span>Share Knowledge</span>
-      </button>
+      <button 
+      className="w-full bg-stone-800 text-stone-50 py-4 px-6 rounded-lg font-serif hover:bg-stone-900 transition-all flex items-center justify-center space-x-2"
+      onClick={() => navigate('/create-feed')} // Navigate to Feed Post Page
+    >
+      <PenTool size={20} />
+      <span>Share Knowledge</span>
+    </button>
 
       <div className="mt-auto p-4 bg-stone-200 rounded-lg">
         <p className="font-serif text-stone-600 italic text-sm">
