@@ -41,7 +41,7 @@ userRoute.get('/getusers', async (req, res) => {
         res.status(500).json({ error: 'Error fetching users.' });
     }
 });
-
+  
 
 userRoute.post('/login', async (req, res) => {
     const { error } = loginSchema.validate(req.body);
